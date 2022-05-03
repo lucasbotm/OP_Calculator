@@ -1,0 +1,33 @@
+body{
+    display:flex;
+    flex-direction:column;
+}
+
+header{
+    display:flex;
+}
+
+.container{
+    display:flex;
+}
+
+.calculator{
+    display:flex;
+    flex-direction:column;
+}
+.display{
+    outline-color: black;
+}
+.buttonsContainer{
+    display:flex;
+    flex-direction:column;
+}
+
+.rows{
+    display:flex;
+    flex-direction:row;
+}
+
+footer{
+    display:flex
+}

@@ -32,3 +32,26 @@ function operate(a,b,operation){
             break;
     }
 }
+
+function populateDisplay(input){
+    if (display.innerHTML===""){
+        display.innerHTML = input
+    }
+    else{
+        display.innerHTML += input
+    }
+}
+
+let display = document.querySelector(".display");
+display.innerHTML = ""
+
+document.querySelectorAll(".button").forEach(button =>{
+    button.addEventListener("click", e=>{
+        populateDisplay(e.target.id);
+    })
+})
+// console.log(buttons.length)
+// for (let i=0; i< buttons.length; i++){
+//     console.log(buttons[i].id);
+//     //button.addEventListener("click",console.log("CU"))
+// }

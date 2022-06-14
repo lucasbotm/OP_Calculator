@@ -16,7 +16,25 @@ function divide(a,b){
     return a/b 
 }
 
+function convertStringToFloat(a,b){
+    let aFloat = parseFloat(a);
+    let bFloat = parseFloat(b);
+    return [aFloat,bFloat]
+}
+
+function checkIfOperation(input){
+    if (Object.keys(operations).includes(input)){
+        return true;
+    return false;
+    }
+}
+
+
 function operate(a,b,operation){
+    let inputValues = convertStringToFloat(a,b)
+    a = inputValues[0];
+    b = inputValues[1];
+
     let result = null;
     switch (operation){
         case "add":
@@ -38,40 +56,49 @@ function operate(a,b,operation){
     }
 }
 
+
+
 function populateDisplay(input){
-    if (currentOperation === null){
-        if (Object.keys(operations).includes(input)){
+    let isOperation = checkIfOperation(input);
+
+    if (isOperation){
+        if (currentOperation === null){
             if (display.innerHTML === ""){
                 return
             }
-            currentResult = +display.innerHTML;
+            else {
+            currentResult = display.innerHTML;
             currentOperation = operations[input];
             display.innerHTML = "";
+            }
         }
-
-        else if (display.innerHTML===""){
-            display.innerHTML = input
-        }
+        
         else{
-            display.innerHTML += input
+            currentResult = operate(currentResult,display.innerHTML,currentOperation);
+            display.innerHTML = currentResult;
+            currentOperation = operations[input];
+            operationLast = true;
         }
     }
     else {
-        if (Object.keys(operations).includes(input)){
-            console.log(currentResult)
-            input = + input
-
-            currentResult = operate(currentResult,input,currentOperation);
-            display.innerHTML = currentResult;
-            console.log(currentResult)
-            currentOperation = null;
-        }
-
-        else if (display.innerHTML===""){
-            display.innerHTML = input
+        if (currentOperation === null){
+            if (display.innerHTML===""){
+                display.innerHTML = input
+            }
+            else{
+                display.innerHTML += input
+            }
         }
         else{
-            display.innerHTML += input
+            if (operationLast){
+                display.innerHTML = input;
+                operationLast = false;
+            }
+            else{
+                display.innerHTML += input;
+            }
+
+
         }
     }
 }
@@ -89,14 +116,12 @@ let operations = {
 
 let currentResult = null;
 let currentOperation = null;
+let operationLast = false;
 
 document.querySelectorAll(".button").forEach(button =>{
     button.addEventListener("click", e=>{
         populateDisplay(e.target.id);
     })
 })
-// console.log(buttons.length)
-// for (let i=0; i< buttons.length; i++){
-//     console.log(buttons[i].id);
-//     //button.addEventListener("click",console.log("CU"))
-// }
+
+
